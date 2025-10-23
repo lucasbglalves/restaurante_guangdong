@@ -1,0 +1,19 @@
+{
+    "name": "lucasalves/restaurante_guangdong",
+    "description": "Projeto da aula de programação para internet do curso de GTI da Fatec Jahu",
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Lucas A B L Alves",
+            "email": "lucas.alves80@fatec.sp.gov.br"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {}
+}

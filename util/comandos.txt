@@ -1,0 +1,16 @@
+Criar uma pasta para o projeto e rodar no cmd:
+
+# Inicia o composer:
+    composer init
+
+# Preencher os dados solicitados
+
+# Alterar o arquivo composer para:
+        "psr-4": {
+            "App\\": "app/"
+        }
+
+# Criar uma pasta public com index.php dentro
+
+# Iniciar um servidor do PHP
+    php -S localhost:8000 -t public 
