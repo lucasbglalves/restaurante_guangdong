@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guangdong - Usuários</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg bg-danger bg-gradient">
+        <div class="container-fluid">
+            <a class="navbar-brand text-white fw-bold" href="/painel.html">Guangdong</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown">
+                        Usuários
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/listagem-usuarios.html">Listagem de usuários</a></li>
+                        <li><a class="dropdown-item" href="/cadastro-usuarios.html">Cadastro de usuários</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown">
+                        Produtos
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/listagem-produtos.html">Listagem de produtos</a></li>
+                        <li><a class="dropdown-item" href="/cadastro-produtos.html">Cadastro de produtos</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <form class="d-flex" role="search">
+                <input class="form-control" type="search" placeholder="Pesquisar..."/>
+				<a href="/login.html" class="btn btn-dark ms-2" type="button">Sair</a>
+            </form>
+            </div>
+        </div>
+        </nav>
+
+    <main class="painel-conteiner m-4">
+        <div class="d-flex mb-3 justify-content-between">
+            <h1>Usuários</h1>
+            <a href="/cadastro-usuarios.html" class="btn btn-success my-auto">Adicionar usuário</a>
+        </div>
+
+        <div style="max-width: 100%; overflow-x: hidden;">
+			<table class="table table-striped table-bordered">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Nome</th>
+						<th>E-mail</th>
+						<th>Tipo</th>
+						<th>Ações</th>
+					</tr>
+				</thead>
+				<tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Liu Wei</td>
+                        <td>liu.wei@guangdong.com</td>
+                        <td>Administrador(a)</td>
+                        <td>
+                            <a href="#" class="btn btn-primary btn-sm">Editar</a>
+                            <a href="#" class="btn btn-danger btn-sm">Excluir</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Mariana Wong</td>
+                        <td>mariana.wong@guangdong.com</td>
+                        <td>Funcionário(a)</td>
+                        <td>
+                            <a href="#" class="btn btn-primary btn-sm">Editar</a>
+                            <a href="#" class="btn btn-danger btn-sm">Excluir</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Carlos Tanaka</td>
+                        <td>carlos.tanaka@guangdong.com</td>
+                        <td>Cliente</td>
+                        <td>
+                            <a href="#" class="btn btn-primary btn-sm">Editar</a>
+                            <a href="#" class="btn btn-danger btn-sm">Excluir</a>
+                        </td>
+                    </tr>
+				</tbody>
+			</table>
+		</div>
+    </main>
+
+    <footer class="menu-bg bg-danger bg-gradient flex-wrap py-3 text-center text-white">
+        <p class="my-auto">Guangdong &copy 2025 Restaurante Asiático. Todos os direitos reservados.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

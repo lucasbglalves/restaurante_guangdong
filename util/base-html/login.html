@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Guangdong</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        /* Estilos locais para o layout de login semelhante ao exemplo */
+        .login-page {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #efebeb;
+            padding: 20px;
+        }
+
+        .login-card {
+            width: 420px;
+            max-width: 100%;
+        }
+
+        .logo-area {
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px solid #eee;
+            background: #fafafa;
+        }
+
+        .logo-area img {
+            max-height: 48px;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-page">
+        <div class="card shadow-sm login-card">
+            <div class="logo-area">
+                <!-- Se houver uma logo em imgs/ coloque aqui; se não, mostra o nome -->
+                <img src="/imgs/logo.png" alt="Guangdong" onerror="this.style.display='none'">
+                <span class="fs-4 fw-bold" style="display:none;">Guangdong</span>
+            </div>
+
+            <div class="card-body">
+                <h3 class="card-title text-center mb-4">Login</h3>
+
+                <form action="/painel.html" method="POST">
+                    <div class="mb-3">
+                        <label for="email" class="form-label">E-mail:</label>
+                        <input id="email" name="email" type="email" class="form-control" placeholder="Digite seu e-mail" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password:</label>
+                        <input id="password" name="password" type="password" class="form-control" placeholder="Digite sua senha" required>
+                    </div>
+
+                    <div class="d-grid mb-3">
+                        <button type="submit" class="btn btn-danger">Entrar</button>
+                    </div>
+
+                    <div class="text-center mb-3">
+                        <a href="#" class="small">Recuperar Senha</a>
+                    </div>
+
+                    <div class="d-grid">
+                        <a href="/cadastro-usuarios.html" class="btn btn-primary">CADASTRAR</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
