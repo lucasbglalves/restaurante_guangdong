@@ -2,6 +2,7 @@
 // Importa o autoload do Composer para carregar as rotas
 require __DIR__ . '/../vendor/autoload.php';
 
+use App\Controllers\UsuarioController;
 
 function render($view, $data = []) {
     extract($data);
@@ -20,7 +21,7 @@ function render_sem_template($view, $data = []) {
 // Obtem a URL do navegador
 $url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
-// Navegação GERAl
+// Navegação GERAL
 if ($url == "/" || $url === '/index.php') {
     render_sem_template('home.php', [
         'title' => 'Bem-vindo!',
@@ -31,7 +32,9 @@ if ($url == "/" || $url === '/index.php') {
 }
 // Usuarios
 else if ($url == "/usuarios") {
-    render('usuarios/lista_usuarios.php', ['title' => 'Listar Usuários']);  
+   // Chama uma instância do controller e chama a função de listar
+    $controller = new UsuarioController();
+    $controller->listar();
 } else if ($url == "/usuarios/inserir") {
     render('usuarios/form_usuarios.php', ['title' => 'Cadastrar Usuário']);  
 }

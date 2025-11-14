@@ -65,6 +65,11 @@
 				</div>
 
 				<div class="mb-3 col-sm">
+					<label for="bairro" class="form-label">Bairro</label>
+					<input type="text" class="form-control" id="bairro" name="bairro" placeholder="Jardins" required>
+				</div>
+
+				<div class="mb-3 col-sm">
 					<label for="estado" class="form-label">Estado</label>
 					<select class="form-select" id="estado" name="estado">
 						<option value="AC">Acre</option>

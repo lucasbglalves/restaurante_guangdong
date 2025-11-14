@@ -7,41 +7,31 @@
 						<th>ID</th>
 						<th>Nome</th>
 						<th>E-mail</th>
-						<th>Tipo</th>
-						<th>Ações</th>
+						<th>Telefone</th>
+						<th>CPF</th>
+                        <th>Cidade</th>
+                        <th>Status</th>
+                        <th class="text-center">Ações</th>
 					</tr>
 				</thead>
 				<tbody>
+                    <?php foreach ($usuarios as $u): ?>
                     <tr>
-                        <td>1</td>
-                        <td>Liu Wei</td>
-                        <td>liu.wei@guangdong.com</td>
-                        <td>Administrador(a)</td>
+                        <td><?= $u['id_usuario'] ?></td>
+                        <td><?= $u['nome'] ?></td>
+                        <td><?= $u['email'] ?></td>
+                        <td><?= $u['celular'] ?></td>
+                        <td><?= $u['cpf'] ?></td>
+                        <td><?= $u['cidade'] . "-" . $u['estado'] ?></td>
+                        <td class="text-center">
+                            
+                        </td>
                         <td>
                             <a href="#" class="btn btn-primary btn-sm">Editar</a>
                             <a href="#" class="btn btn-danger btn-sm">Excluir</a>
                         </td>
                     </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Mariana Wong</td>
-                        <td>mariana.wong@guangdong.com</td>
-                        <td>Funcionário(a)</td>
-                        <td>
-                            <a href="#" class="btn btn-primary btn-sm">Editar</a>
-                            <a href="#" class="btn btn-danger btn-sm">Excluir</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Carlos Tanaka</td>
-                        <td>carlos.tanaka@guangdong.com</td>
-                        <td>Cliente</td>
-                        <td>
-                            <a href="#" class="btn btn-primary btn-sm">Editar</a>
-                            <a href="#" class="btn btn-danger btn-sm">Excluir</a>
-                        </td>
-                    </tr>
+                    <?php endforeach; ?>
 				</tbody>
 			</table>
         </div>
