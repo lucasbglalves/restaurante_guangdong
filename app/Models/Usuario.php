@@ -47,7 +47,7 @@ class Usuario {
             $stmt->bindParam(':estado', $dados['estado'], PDO::PARAM_STR);
             $stmt->bindParam(':email', $dados['email'], PDO::PARAM_STR);
             $stmt->bindParam(':nivel_acesso', $dados['nivel_acesso'], PDO::PARAM_STR);
-            $stmt->bindParam(':senha', $senha_hash, PDO::PARAM_STR);
+            $stmt->bindParam(':senha', $senha_criptografada);
 
             $stmt->execute(); 
             //Retorna o ID de registro no BD

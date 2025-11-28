@@ -22,7 +22,7 @@
 
 				<div class="mb-3 col-sm">
 					<label for="telefone" class="form-label">Telefone</label>
-					<input type="tel" class="form-control" id="telefone" name="telefone" placeholder="(14) 9 9123-4567" required>
+					<input type="tel" class="form-control" id="telefone" name="celular" placeholder="(14) 9 9123-4567" required>
 				</div>
 
 				<div class="mb-3 col-sm">
@@ -104,7 +104,7 @@
 			</div>
 
 			<div class="mb-3">
-                <label for="nivel_acesso" class="form-label">Tipo de usuário</label>
+                <label for="tipo" class="form-label">Tipo de usuário</label>
                 <select class="form-select" id="nivel_acesso" name="nivel_acesso" required>
                     <option value="administrador">Administrador(a)</option>
                     <option value="funcionario">Funcionário(a)</option>
