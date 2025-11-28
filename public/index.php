@@ -44,3 +44,9 @@ else if ($url == "/produtos") {
 } else if ($url == "/produtos/inserir") {
     render('produtos/form_produtos.php', ['title' => 'Cadastrar Produto']);  
 } 
+
+
+else if ($url == "/usuarios/salvar" && $_SERVER['REQUEST_METHOD'] === 'POST') {
+    $controller = new UsuarioController();
+    $controller->salvar();
+} 

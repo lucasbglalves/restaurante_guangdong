@@ -34,4 +34,8 @@
                     <?php endforeach; ?>
 				</tbody>
 			</table>
+            
+  <div class="text-center">
+    <a href="../usuarios/inserir" class="btn btn-success">Novo Usuário</a>
+  </div>
         </div>

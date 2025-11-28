@@ -1,7 +1,7 @@
-	<main class="painel-conteiner m-4">
+<main class="painel-conteiner m-4">
         <h1>Cadastrar usuário</h1>
 
-        <form action="/listagem-usuarios.html" method="POST">
+        <form action="/usuarios/salvar" method="POST">
 			<div class="row">
 				<div class="mb-3 col-sm">
 					<label for="nome" class="form-label">Nome completo</label>
@@ -103,6 +103,15 @@
 				</div>
 			</div>
 
+			<div class="mb-3">
+                <label for="nivel_acesso" class="form-label">Tipo de usuário</label>
+                <select class="form-select" id="nivel_acesso" name="nivel_acesso" required>
+                    <option value="administrador">Administrador(a)</option>
+                    <option value="funcionario">Funcionário(a)</option>
+                    <option value="cliente">Cliente</option>
+                </select>
+            </div>
+
 			<div class="row">
 				<div class="mb-3 col-sm">
 					<label for="senha" class="form-label">Senha</label>
@@ -115,16 +124,7 @@
 				</div>
 			</div>
 
-            <div class="mb-3">
-                <label for="tipo" class="form-label">Tipo de usuário</label>
-                <select class="form-select" id="tipo" required>
-                    <option value="administrador">Administrador(a)</option>
-                    <option value="funcionario">Funcionário(a)</option>
-                    <option value="cliente">Cliente</option>
-                </select>
-            </div>
-
-            <a href="listagem-usuarios.html" class="btn btn-secondary me-2">Voltar</a>
+            <a href="../home.php" class="btn btn-secondary">Voltar</a>
 			<button type="reset" class="btn btn-danger me-2">Limpar</button>
 			<button type="submit" class="btn btn-success">Salvar</button>
         </form>
