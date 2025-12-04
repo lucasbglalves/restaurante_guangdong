@@ -1,48 +1,61 @@
 <?php
-// Importa o autoload do Composer para carregar as rotas
+/**
+ * Arquivo principal que controla as rotas das funções do sistema
+ */
+
 require __DIR__ . '/../vendor/autoload.php';
 
 use App\Controllers\UsuarioController;
 use App\Controllers\ProdutoController;
 
+/**
+ * Função para renderizar as views
+ */
 function render($view, $data = []) {
     extract($data);
+    
     ob_start();
     require __DIR__ . '/../app/Views/' . $view;
+
     $content = ob_get_clean();
+    
     require __DIR__ . '/../app/Views/layouts/base.php';
 }
 
+/**
+ * Renderiza uma view sem template, como home.php que tem um HTML diferente
+ */
 function render_sem_template($view, $data = []) {
     extract($data);
     ob_start();
     require __DIR__ . '/../app/Views/' . $view;
 }
 
-// Obtem a URL do navegador
+// Identifica a URL que o usuário acessou
 $url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
-// Navegação GERAL
+
+// Rotas da página inicial e sobre
 if ($url == "/" || $url === '/index.php') {
     render_sem_template('home.php', [
         'title' => 'Bem-vindo!',
-        
     ]);
 } else if ($url == "/sobre") {
     render('sobre.php', ['title' => 'Sobre Nós']);  
 }
-// Usuarios
+// Rotas de usuários
 else if ($url == "/usuarios") {
-   // Chama uma instância do controller e chama a função de listar
+    // Cria uma instância do controller e chama a função listar
     $controller = new UsuarioController();
     $controller->listar();
 } else if ($url == "/usuarios/inserir") {
+    // Renderiza a view do formulário
     render('usuarios/form_usuarios.php', ['title' => 'Cadastrar Usuário']);  
 } else if ($url == "/usuarios/editar") {
     $controller = new UsuarioController();
     $controller->editar();
 }
-// Produtos
+// Rotas de produtos
 else if ($url == "/produtos") {
     $controller = new ProdutoController();
     $controller->listar();
@@ -52,8 +65,9 @@ else if ($url == "/produtos") {
     $controller = new ProdutoController();
     $controller->editar();
 }
-
-
+// Rotas de ações - POST (salvar, atualizar, excluir)
+// Verifica o método da requisição para garantir que é POST
+// Evita que alguém acesse essas rotas digitando na URL
 else if ($url == "/usuarios/salvar" && $_SERVER['REQUEST_METHOD'] === 'POST') {
     $controller = new UsuarioController();
     $controller->salvar();

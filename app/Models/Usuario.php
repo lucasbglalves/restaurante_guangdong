@@ -5,21 +5,21 @@ use PDO;
 use App\Core\Database;
 use PDOException;
 
+/**
+ * Responsável pelas operações de banco de dados relacionadas a usuários
+ */
 class Usuario {
 
-    // Aqui declaramos uma função para cada operação do CRUD
-
-    // Busca todos os usuários
+    /**
+     * Busca todos os usuários ativos no sistema e não mostra os deletados logicamente
+     */
     public static function buscarTodos() {
-        // Primeiro vamos conectar no banco de dados
-        // Precisamos importar o PDO antes de criar a classe
-        // Como vamos utilizar o arquivo DATABASE, importamos ele também
         $pdo = Database::conectar();
         $sql = "SELECT * FROM usuarios WHERE deleted_at IS NULL";
         return $pdo->query($sql)->fetchAll();
     }
 
-    // Busca um único usuário pelo ID
+  
     public static function buscarPorId(int $id) {
         $pdo = Database::conectar();
         $sql = "SELECT * FROM usuarios WHERE id_usuario = :id AND deleted_at IS NULL";
@@ -29,7 +29,9 @@ class Usuario {
         return $stmt->fetch();
     }
 
-    // Insere um novo usuário
+    /**
+     * Função para salvar um novo usuário e criptografia da senha para salvar no banco de dados
+     */
     public static function salvar($dados) {
         try{
             $pdo = Database::conectar();
@@ -39,10 +41,8 @@ class Usuario {
             $sql ="INSERT INTO usuarios (nome, genero, cpf, data_nascimento, celular, rua, numero, complemento, bairro, cidade, cep, estado, email, nivel_acesso, senha)";
             $sql .= " VALUES (:nome, :genero, :cpf, :data_nascimento, :celular, :rua, :numero, :complemento, :bairro, :cidade, :cep, :estado, :email, :nivel_acesso, :senha)";
 
-            // Prepara o SQL para ser inserido no BD e limpa códigos maliciosos
             $stmt = $pdo->prepare($sql);
 
-            // Passa as variáveis para o SQL
             $stmt->bindParam(':nome', $dados['nome'], PDO::PARAM_STR);
             $stmt->bindParam(':genero', $dados['genero'], PDO::PARAM_STR);
             $stmt->bindParam(':cpf', $dados['cpf'], PDO::PARAM_STR);
@@ -60,9 +60,8 @@ class Usuario {
             $stmt->bindParam(':senha', $senha_criptografada);
 
             $stmt->execute(); 
-            //Retorna o ID de registro no BD
+            
             return (int) $pdo->lastInsertId();
-
 
         } catch (PDOException $e) {
             echo "Erro ao salvar usuário: " . $e->getMessage();
@@ -70,7 +69,9 @@ class Usuario {
         }
     }
 
-    // Atualiza um usuário existente
+    /**
+     * Função para atualizar os dados do usuario editado
+     */
     public static function atualizar(int $id, $dados) {
         try {
             $pdo = Database::conectar();
@@ -121,7 +122,9 @@ class Usuario {
         }
     }
 
-    // Exclusão lógica do usuário
+    /**
+     * Deleção logica de um usuario
+     */
     public static function excluir(int $id) {
         try {
             $pdo = Database::conectar();

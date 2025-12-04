@@ -5,16 +5,18 @@ use PDO;
 use App\Core\Database;
 use PDOException;
 
+/**
+ * Responsável pelas operações de banco de dados relacionadas a produtos
+ */
 class Produto {
 
-    // Lista todos os produtos
     public static function buscarTodos() {
         $pdo = Database::conectar();
+        // ORDER BY criado_em DESC para mostrar produtos mais recentes primeiro
         $sql = "SELECT * FROM produtos ORDER BY criado_em DESC";
         return $pdo->query($sql)->fetchAll();
     }
 
-    // Busca um único produto pelo ID
     public static function buscarPorId(int $id) {
         $pdo = Database::conectar();
         $sql = "SELECT * FROM produtos WHERE id_produtos = :id";
@@ -24,7 +26,9 @@ class Produto {
         return $stmt->fetch();
     }
 
-    // Insere um novo produto
+    /**
+     * Função para salvar um novo produto
+     */
     public static function salvar($dados) {
         try {
             $pdo = Database::conectar();
@@ -47,7 +51,9 @@ class Produto {
         }
     }
 
-    // Atualiza um produto existente
+    /**
+     * Atualizar os dados do produto editado
+     */
     public static function atualizar(int $id, $dados) {
         try {
             $pdo = Database::conectar();
@@ -73,7 +79,9 @@ class Produto {
         }
     }
 
-    // Exclui um produto (remoção definitiva)
+    /**
+     * Deleção física de um produto
+     */
     public static function excluir(int $id) {
         try {
             $pdo = Database::conectar();

@@ -3,9 +3,15 @@ namespace App\Controllers;
 
 use App\Models\Produto;
 
+/**
+ * Controller para gerenciar produtos do cardápio
+ * Implementa as mesmas funcionalidades do UsuarioController mas para produtos
+ */
 class ProdutoController {
 
-    // Lista os produtos e chama a tela de listar
+    /**
+     * Lista todos os produtos cadastrados
+     */
     public function listar() {
         $lista_produtos = Produto::buscarTodos();
 
@@ -15,8 +21,12 @@ class ProdutoController {
         ]);
     }
 
-    // Salva um novo produto
+    /**
+     * Processa o cadastro de um novo produto
+     * Valida os campos obrigatórios antes de salvar
+     */
     public function salvar() {
+        // Filtra os dados do formulário
         $dados = [
             'codigo' => filter_input(INPUT_POST, 'codigo', FILTER_SANITIZE_SPECIAL_CHARS),
             'nome_produto' => filter_input(INPUT_POST, 'nome_produto', FILTER_SANITIZE_SPECIAL_CHARS),
@@ -26,6 +36,7 @@ class ProdutoController {
 
         $erros = [];
 
+        // Validação de campos obrigatórios
         if (empty($dados['codigo'])) {
             $erros[] = 'O campo CÓDIGO não pode ficar em branco!';
         }
@@ -38,6 +49,8 @@ class ProdutoController {
             $erros[] = 'O campo CATEGORIA não pode ficar em branco!';
         }
 
+        // Validação especial para preço: precisa ser um número válido
+        // Verifico se é null, vazio ou se não é numérico
         if ($dados['preco'] === null || $dados['preco'] === '' || !is_numeric($dados['preco'])) {
             $erros[] = 'O campo PREÇO deve ser um número válido!';
         }
@@ -52,7 +65,10 @@ class ProdutoController {
         }
     }
 
-    // Mostra o formulário para editar um produto
+    /**
+     * Carrega o formulário de edição com os dados do produto
+     * Mesma lógica do método editar() do UsuarioController
+     */
     public function editar() {
         $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 
@@ -74,7 +90,10 @@ class ProdutoController {
         ]);
     }
 
-    // Atualiza os dados de um produto
+    /**
+     * Atualiza um produto existente
+     * Reutiliza as mesmas validações do método salvar()
+     */
     public function atualizar() {
         $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 
@@ -118,7 +137,11 @@ class ProdutoController {
         }
     }
 
-    // Exclui um produto
+    /**
+     * Exclui um produto do banco de dados
+     * Diferente dos usuários, fazemos deleção física
+     * porque produtos podem ser removidos definitivamente sem problema
+     */
     public function excluir() {
         $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 
@@ -127,6 +150,7 @@ class ProdutoController {
         }
 
         header('Location: /produtos');
+        exit;
     }
 }
 

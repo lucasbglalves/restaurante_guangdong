@@ -5,13 +5,18 @@ namespace App\Core;
 use PDO;
 use PDOException;
 
+/**
+ * Conexão com o banco de dados SQL
+ */
 class Database {
+
     public static function conectar() {
-        $host = '127.0.0.1';
-        $porta = '3306';
+
+        $host = '127.0.0.1';  
+        $porta = '3306';       
         $banco = 'restaurante_guangdong';
         $usuario = 'root';
-        $senha = '';
+        $senha = '';          
         
         $dsn = "mysql:host=$host;port=$porta;dbname=$banco;charset=utf8";
         

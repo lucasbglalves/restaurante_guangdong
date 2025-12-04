@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= $tile ?></title>
+    <title><?= $title ?></title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/style.css">
 </head>
 
-<body>
+<body class="d-flex flex-column min-vh-100">
 
     <nav class="navbar navbar-expand-lg bg-danger bg-gradient">
         <div class="container">
-            <a class="navbar-brand text-white fw-bold" href="/home">Guangdong</a>
+            <a class="navbar-brand text-white fw-bold" href="/">Guangdong</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
             <span class="navbar-toggler-icon"></span>
             </button>
@@ -45,13 +45,13 @@
         </div>
         </nav>
 
-    <div class="container">
+    <div class="container flex-grow-1 py-4">
         <?= $content ?>
     </div>
     
 
-    <footer class="menu-bg bg-danger bg-gradient flex-wrap p-3 text-center text-white">
-        <p class="my-auto">Guangdong &copy 2025 Restaurante Asiático. Todos os direitos reservados.</p>
+    <footer class="bg-danger bg-gradient p-3 text-center text-white mt-auto">
+        <p class="mb-0">Guangdong &copy; 2025 Restaurante Asiático. Todos os direitos reservados.</p>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>

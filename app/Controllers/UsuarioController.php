@@ -3,21 +3,34 @@ namespace App\Controllers;
 
 use App\Models\Usuario;
 
+/**
+ * Controller responsável por gerenciar as ações relacionadas aos usuários
+ * Controla as regras de negócio e validações necessárias
+ */
 class UsuarioController {
 
-    //Busca os usuarios e chama a tela de listar
+    /**
+     * Lista todos os usuários cadastrados no sistema
+     * Busca os dados através do Model e passa para a view de listagem
+     */
     public function listar(){
-        //Chama a model e a função que busca os dados e armazena na var
+        // Busca todos os usuários através do Model
         $lista_usuarios = Usuario::buscarTodos();
 
+        // Renderiza a view passando os dados encontrados
+        // Função render declarada no index.php
         render("usuarios/lista_usuarios.php", [
         'title' => "Lista de Usuários",
         'usuarios' =>$lista_usuarios      
         ]);
     }
 
+    /**
+     * Processa o cadastro de um novo usuário
+     */
     public function salvar() {
-    //Limpa os dados, remove tudo que não for texto puro
+    // Tratamento dos dados do formulário
+    // FILTER_SANITIZE_SPECIAL_CHARS remove caracteres especiais 
     $dados = [
         'nome' => filter_input(INPUT_POST, 'nome', FILTER_SANITIZE_SPECIAL_CHARS),
         'nome_social' => filter_input(INPUT_POST, 'nome_social', FILTER_SANITIZE_SPECIAL_CHARS),
@@ -25,7 +38,6 @@ class UsuarioController {
         'cpf' => filter_input(INPUT_POST, 'cpf', FILTER_SANITIZE_SPECIAL_CHARS),
         'rg' => filter_input(INPUT_POST, 'rg', FILTER_SANITIZE_SPECIAL_CHARS),
         'data_nascimento' => filter_input(INPUT_POST, 'nascimento', FILTER_SANITIZE_SPECIAL_CHARS),
-        // o campo no formulário se chama "celular"
         'celular' => filter_input(INPUT_POST, 'celular', FILTER_SANITIZE_SPECIAL_CHARS),
         'rua' => filter_input(INPUT_POST, 'logradouro', FILTER_SANITIZE_SPECIAL_CHARS),
         'numero' => filter_input(INPUT_POST, 'numero', FILTER_SANITIZE_SPECIAL_CHARS),
@@ -39,22 +51,22 @@ class UsuarioController {
         'senha' => filter_input(INPUT_POST, 'senha', FILTER_UNSAFE_RAW)
     ];
 
-    // garante que nivel_acesso nunca seja nulo e respeita o ENUM do banco
+    // Validação do nível de acesso, garante que não seja nulo
     if (empty($dados['nivel_acesso'])) {
         $dados['nivel_acesso'] = 'Cliente';
     }
 
-    //cria a lista de erros
+    // Armazena os erros de validação
     $erros = [];
 
-    //Verifica se o nome está vazio
+    // Valida o nome completo e garante que tenha mais de 3 caracteres
     if (empty($dados['nome'])) {
         $erros[] = 'O campo NOME não pode ficar em branco!';
-    } else if (strlen($dados['nome']) < 4) {//Verifica se o nome tem menos de 4 letras
+    } else if (strlen($dados['nome']) < 4) {
         $erros[] = 'O campo NOME deve ter mais que 3 caracteres!';
     }
 
-    // Senha: valida e mantém o valor "puro" para o Model fazer o hash
+    // Criptografia da senha do usuario para salvar no banco de dados
     $senha_raw = $dados['senha'];
     $senha_conf = filter_input(INPUT_POST, 'confirmacao-senha', FILTER_UNSAFE_RAW);
 
@@ -66,21 +78,20 @@ class UsuarioController {
         $erros[] = 'A senha deve ter ao menos 6 caracteres.';
     }
 
-    //Se não houver erros salva e vai para a tela de LISTAGEM
+  
     if (empty($erros)) {
         $id = Usuario::salvar($dados);
-       header('Location: /usuarios');
+        header('Location: /usuarios');
+        exit; 
     } else {
-        print_r($erros);
-        print_r($dados);
-        //Se houver erros, volta para o FORMULÁRIO
         $_SESSION['erros'] = $erros;
         $_SESSION['dados'] = $dados;
-      //  header('Location: /usuarios/inserir');
         }
     }
 
-    // Mostra o formulário para editar um usuário
+    /**
+     * Carrega o formulário de edição preenchido com os dados do usuário
+     */
     public function editar() {
         $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 
@@ -102,7 +113,10 @@ class UsuarioController {
         ]);
     }
 
-    // Atualiza os dados de um usuário
+    /**
+     * Atualiza os dados do usuario editado
+     * Faz as mesmas validações da função salvar
+     */
     public function atualizar() {
         $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 
@@ -160,7 +174,10 @@ class UsuarioController {
         }
     }
 
-    // Exclui (lógico) um usuário
+    /**
+     * Exclui um usuário do sistema
+     * Apenas deleção lógica, sendo possível ver também a data de exclusão
+     */
     public function excluir() {
         $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 
@@ -169,5 +186,6 @@ class UsuarioController {
         }
 
         header('Location: /usuarios');
+        exit;
     }
 }
