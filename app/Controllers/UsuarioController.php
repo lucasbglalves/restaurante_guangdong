@@ -24,10 +24,9 @@ class UsuarioController {
         'genero' => filter_input(INPUT_POST, 'genero', FILTER_SANITIZE_SPECIAL_CHARS),
         'cpf' => filter_input(INPUT_POST, 'cpf', FILTER_SANITIZE_SPECIAL_CHARS),
         'rg' => filter_input(INPUT_POST, 'rg', FILTER_SANITIZE_SPECIAL_CHARS),
-        // fix: read the date field correctly (form uses name="nascimento")
         'data_nascimento' => filter_input(INPUT_POST, 'nascimento', FILTER_SANITIZE_SPECIAL_CHARS),
-        // align names with the form
-        'celular' => filter_input(INPUT_POST, 'telefone', FILTER_SANITIZE_SPECIAL_CHARS),
+        // o campo no formulário se chama "celular"
+        'celular' => filter_input(INPUT_POST, 'celular', FILTER_SANITIZE_SPECIAL_CHARS),
         'rua' => filter_input(INPUT_POST, 'logradouro', FILTER_SANITIZE_SPECIAL_CHARS),
         'numero' => filter_input(INPUT_POST, 'numero', FILTER_SANITIZE_SPECIAL_CHARS),
         'complemento' => filter_input(INPUT_POST, 'complemento', FILTER_SANITIZE_SPECIAL_CHARS),
@@ -37,7 +36,7 @@ class UsuarioController {
         'estado' => filter_input(INPUT_POST, 'estado', FILTER_SANITIZE_SPECIAL_CHARS),
         'email' => filter_input(INPUT_POST, 'email', FILTER_SANITIZE_SPECIAL_CHARS),
         'nivel_acesso' => filter_input(INPUT_POST, 'nivel_acesso', FILTER_SANITIZE_SPECIAL_CHARS),
-        'senha' => filter_input(INPUT_POST, 'senha', FILTER_DEFAULT)
+        'senha' => filter_input(INPUT_POST, 'senha', FILTER_UNSAFE_RAW)
     ];
 
     // ensure nivel_acesso is never null (use safe default)
@@ -55,8 +54,8 @@ class UsuarioController {
         $erros[] = 'O campo NOME deve ter mais que 3 caracteres!';
     }
 
-    // Password: capture raw inputs, validate and hash
-    $senha_raw = filter_input(INPUT_POST, 'senha', FILTER_UNSAFE_RAW);
+    // Senha: valida e mantém o valor "puro" para o Model fazer o hash
+    $senha_raw = $dados['senha'];
     $senha_conf = filter_input(INPUT_POST, 'confirmacao-senha', FILTER_UNSAFE_RAW);
 
     if (empty($senha_raw)) {
@@ -65,9 +64,6 @@ class UsuarioController {
         $erros[] = 'A confirmação de senha não confere.';
     } elseif (strlen((string)$senha_raw) < 6) {
         $erros[] = 'A senha deve ter ao menos 6 caracteres.';
-    } else {
-        // hash before saving so model always receives a string
-        $dados['senha'] = password_hash($senha_raw, PASSWORD_DEFAULT);
     }
 
     //Se não houver erros salva e vai para a tela de LISTAGEM
@@ -82,5 +78,96 @@ class UsuarioController {
         $_SESSION['dados'] = $dados;
       //  header('Location: /usuarios/inserir');
         }
+    }
+
+    // Mostra o formulário para editar um usuário
+    public function editar() {
+        $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
+
+        if (!$id) {
+            header('Location: /usuarios');
+            exit;
+        }
+
+        $usuario = Usuario::buscarPorId($id);
+
+        if (!$usuario) {
+            header('Location: /usuarios');
+            exit;
+        }
+
+        render('usuarios/form_usuarios_editar.php', [
+            'title' => 'Editar Usuário',
+            'usuario' => $usuario
+        ]);
+    }
+
+    // Atualiza os dados de um usuário
+    public function atualizar() {
+        $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
+
+        if (!$id) {
+            header('Location: /usuarios');
+            exit;
+        }
+
+        $dados = [
+            'nome' => filter_input(INPUT_POST, 'nome', FILTER_SANITIZE_SPECIAL_CHARS),
+            'nome_social' => filter_input(INPUT_POST, 'nome_social', FILTER_SANITIZE_SPECIAL_CHARS),
+            'genero' => filter_input(INPUT_POST, 'genero', FILTER_SANITIZE_SPECIAL_CHARS),
+            'cpf' => filter_input(INPUT_POST, 'cpf', FILTER_SANITIZE_SPECIAL_CHARS),
+            'rg' => filter_input(INPUT_POST, 'rg', FILTER_SANITIZE_SPECIAL_CHARS),
+            'data_nascimento' => filter_input(INPUT_POST, 'nascimento', FILTER_SANITIZE_SPECIAL_CHARS),
+            'celular' => filter_input(INPUT_POST, 'celular', FILTER_SANITIZE_SPECIAL_CHARS),
+            'rua' => filter_input(INPUT_POST, 'logradouro', FILTER_SANITIZE_SPECIAL_CHARS),
+            'numero' => filter_input(INPUT_POST, 'numero', FILTER_SANITIZE_SPECIAL_CHARS),
+            'complemento' => filter_input(INPUT_POST, 'complemento', FILTER_SANITIZE_SPECIAL_CHARS),
+            'bairro' => filter_input(INPUT_POST, 'bairro', FILTER_SANITIZE_SPECIAL_CHARS),
+            'cidade'=> filter_input(INPUT_POST, 'cidade', FILTER_SANITIZE_SPECIAL_CHARS),
+            'cep'=> filter_input(INPUT_POST, 'cep', FILTER_SANITIZE_SPECIAL_CHARS),
+            'estado' => filter_input(INPUT_POST, 'estado', FILTER_SANITIZE_SPECIAL_CHARS),
+            'email' => filter_input(INPUT_POST, 'email', FILTER_SANITIZE_SPECIAL_CHARS),
+            'nivel_acesso' => filter_input(INPUT_POST, 'nivel_acesso', FILTER_SANITIZE_SPECIAL_CHARS),
+            'senha' => filter_input(INPUT_POST, 'senha', FILTER_UNSAFE_RAW)
+        ];
+
+        $erros = [];
+
+        if (empty($dados['nome'])) {
+            $erros[] = 'O campo NOME não pode ficar em branco!';
+        } else if (strlen($dados['nome']) < 4) {
+            $erros[] = 'O campo NOME deve ter mais que 3 caracteres!';
+        }
+
+        $senha_raw = $dados['senha'];
+        $senha_conf = filter_input(INPUT_POST, 'confirmacao-senha', FILTER_UNSAFE_RAW);
+
+        if (empty($senha_raw)) {
+            $erros[] = 'O campo SENHA não pode ficar em branco!';
+        } elseif ($senha_raw !== $senha_conf) {
+            $erros[] = 'A confirmação de senha não confere.';
+        } elseif (strlen((string)$senha_raw) < 6) {
+            $erros[] = 'A senha deve ter ao menos 6 caracteres.';
+        }
+
+        if (empty($erros)) {
+            Usuario::atualizar($id, $dados);
+            header('Location: /usuarios');
+        } else {
+            $_SESSION['erros'] = $erros;
+            $_SESSION['dados'] = $dados;
+            header('Location: /usuarios/editar?id=' . $id);
+        }
+    }
+
+    // Exclui (lógico) um usuário
+    public function excluir() {
+        $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
+
+        if ($id) {
+            Usuario::excluir($id);
+        }
+
+        header('Location: /usuarios');
     }
 }

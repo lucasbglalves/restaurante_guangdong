@@ -23,12 +23,10 @@
                         <td><?= $u['celular'] ?></td>
                         <td><?= $u['cpf'] ?></td>
                         <td><?= $u['cidade'] . "-" . $u['estado'] ?></td>
+                        <td class="text-center"><?= $u['nivel_acesso'] ?></td>
                         <td class="text-center">
-                            
-                        </td>
-                        <td>
-                            <a href="#" class="btn btn-primary btn-sm">Editar</a>
-                            <a href="#" class="btn btn-danger btn-sm">Excluir</a>
+                            <a href="/usuarios/editar?id=<?= $u['id_usuario'] ?>" class="btn btn-primary btn-sm">Editar</a>
+                            <a href="/usuarios/excluir?id=<?= $u['id_usuario'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Tem certeza que deseja excluir este usuário?');">Excluir</a>
                         </td>
                     </tr>
                     <?php endforeach; ?>

@@ -106,9 +106,9 @@
 			<div class="mb-3">
                 <label for="tipo" class="form-label">Tipo de usuário</label>
                 <select class="form-select" id="nivel_acesso" name="nivel_acesso" required>
-                    <option value="administrador">Administrador(a)</option>
-                    <option value="funcionario">Funcionário(a)</option>
-                    <option value="cliente">Cliente</option>
+                    <option value="Administrador">Administrador(a)</option>
+                    <option value="Funcionário">Funcionário(a)</option>
+                    <option value="Cliente">Cliente</option>
                 </select>
             </div>
 
