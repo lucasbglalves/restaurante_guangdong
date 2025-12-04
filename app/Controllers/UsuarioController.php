@@ -39,9 +39,9 @@ class UsuarioController {
         'senha' => filter_input(INPUT_POST, 'senha', FILTER_UNSAFE_RAW)
     ];
 
-    // ensure nivel_acesso is never null (use safe default)
+    // garante que nivel_acesso nunca seja nulo e respeita o ENUM do banco
     if (empty($dados['nivel_acesso'])) {
-        $dados['nivel_acesso'] = 'cliente';
+        $dados['nivel_acesso'] = 'Cliente';
     }
 
     //cria a lista de erros
